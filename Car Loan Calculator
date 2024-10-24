@@ -1,0 +1,42 @@
+package carLoan;
+
+import java.util.Scanner;
+
+public class CarLoanPaymentCalculator {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+
+            System.out.print("Enter the car loan amount: ");
+            double carLoan = input.nextDouble();
+
+            System.out.print("Enter the annual interest rate (as a percentage, e.g., 5 for 5%): ");
+            double interestRate = input.nextDouble();
+
+            System.out.print("Enter the length of the loan in years: ");
+            int loanLengthYears = input.nextInt();
+
+            System.out.print("Enter the down payment: ");
+            double downPayment = input.nextDouble();
+
+            if (downPayment >= carLoan) {
+                System.out.println("The down payment is greater than or equal to the car loan amount, no loan is needed.");
+            } else {
+                double loanAmount = carLoan - downPayment;
+                double monthlyInterestRate = (interestRate / 100) / 12;
+                int loanLengthMonths = loanLengthYears * 12;
+
+                double monthlyPayment;
+
+                if (interestRate == 0) {
+                    monthlyPayment = loanAmount / loanLengthMonths;
+                } else {
+                    monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -loanLengthMonths));
+                }
+
+                System.out.printf("Your monthly payment will be: $%.2f\n", monthlyPayment);
+            }
+
+            input.close();
+        }
+
+}
